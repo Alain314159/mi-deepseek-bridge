@@ -1,17 +1,16 @@
-# Extensión Mi DeepSeek Bridge
+# Extension Mi DeepSeek Bridge
 
-## Cómo instalarla (Titanium Browser en Android)
+## Instalacion en Titanium
 
-1. Descargá el ZIP del repo (`https://github.com/Alain314159/mi-deepseek-bridge/archive/refs/heads/main.zip`).
-2. Extraélo en tu teléfono.
-3. Abrí Titanium → menú → "Extensiones" → "Modo desarrollador".
-4. "Cargar extensión sin empaquetar" → elegí la carpeta `extension/`.
-5. Abrí `https://chat.deepseek.com` y deberías ver el botón flotante ▶ abajo a la derecha.
+1. Descarga el repo: https://github.com/Alain314159/mi-deepseek-bridge/archive/refs/heads/main.zip
+2. Extrae el ZIP en el telefono.
+3. Abre Titanium, menu, Extensiones, Modo desarrollador.
+4. Cargar extension sin empaquetar, elige la carpeta extension/.
+5. Abre https://chat.deepseek.com
 
-## Cómo funciona
+## Uso
 
-- Detecta bloques de código en las respuestas de DeepSeek.
-- Inyecta un botón "▶ Ejecutar" al lado del bloque.
-- Al tocarlo, el comando se envía por postMessage al iframe de la PWA.
-- La PWA lo ejecuta en Nodepod (git, node, npm, shell).
-- El resultado vuelve y se inyecta en el textarea del chat.
+- Boton flotante abre el panel con la PWA.
+- Toggle Auto activa auto-pilot.
+- Boton I pega las instrucciones en el input.
+- Botones Ejecutar aparecen al lado de cada comando.
