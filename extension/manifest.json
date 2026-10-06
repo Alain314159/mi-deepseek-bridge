@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Mi DeepSeek Bridge",
+  "version": "0.1.0",
+  "description": "Ejecuta comandos de DeepSeek en un Linux en el navegador",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://chat.deepseek.com/*", "https://alain314159.github.io/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.deepseek.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Mi DeepSeek Bridge"
+  }
+}

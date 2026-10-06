@@ -1,15 +1,13 @@
-# Mi DeepSeek Bridge
+# mi-deepseek-bridge
 
-Puente entre el chat de DeepSeek web y un entorno Linux que corre dentro del navegador (Shiro + WebAssembly).
+Puente entre el chat web de DeepSeek y un entorno Linux que corre dentro del navegador.
 
-## Arquitectura
+## Componentes
 
-- **Extensión de navegador**: lee las respuestas de DeepSeek y detecta comandos
-- **PWA con Shiro**: ejecuta los comandos en un Linux virtual (WASM)
-- **Comunicación**: BroadcastChannel entre las dos pestañas
+- **`pwa/`** — Aplicación web (Nodepod + Vue + xterm). Se compila y publica en GitHub Pages.
+- **`extension/`** — Extensión de navegador para `chat.deepseek.com`. Detecta comandos y los ejecuta en la PWA.
+- **`docs/`** — Plan y convenciones.
 
-## Sin Termux, sin tokens de API.
+## URL de la PWA
 
-## Estado
-
-🚧 En desarrollo
+https://alain314159.github.io/mi-deepseek-bridge/
