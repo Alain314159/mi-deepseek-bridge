@@ -1,10 +1,17 @@
-import { Nodepod } from '@r1ck404/nodepod';
+import { Nodepod, ensureRuntimeHost } from '@r1ck404/nodepod';
+
 let instance = null;
 let bootPromise = null;
+
 export async function bootNodepod() {
   if (instance) return instance;
   if (bootPromise) return bootPromise;
+
   bootPromise = (async () => {
+    // Registrar el RuntimeHost antes de bootear (evita "No RuntimeHost registered")
+    if (typeof ensureRuntimeHost === 'function') {
+      ensureRuntimeHost();
+    }
     const np = await Nodepod.boot({
       files: { '/home/project/README.md': '# Proyecto\n' },
       workdir: '/home/project',
@@ -13,9 +20,12 @@ export async function bootNodepod() {
     instance = np;
     return np;
   })();
+
   return bootPromise;
 }
+
 export function getNodepod() { return instance; }
+
 export async function execCommand(cmd, opts = {}) {
   const np = await bootNodepod();
   const timeout = opts.timeout ?? 120000;
