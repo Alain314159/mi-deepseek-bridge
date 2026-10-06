@@ -18,16 +18,23 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults: { run: { working-directory: pwa } }
+    defaults:
+      run:
+        working-directory: pwa
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20' }
-      - run: npm install --no-audit --no-fund --legacy-peer-deps
-      - run: npm run build
-        env: { VITE_BASE: /mi-deepseek-bridge/ }
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm install --no-audit --no-fund --legacy-peer-deps
+      - name: Build
+        env:
+          VITE_BASE: /mi-deepseek-bridge/
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
-        with: { path: pwa/dist }
+        with:
+          path: pwa/dist
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -6,6 +6,17 @@ const base = process.env.VITE_BASE || '/';
 export default defineConfig({
   base,
   plugins: [vue()],
-  build: { target: 'esnext', outDir: 'dist' },
-  optimizeDeps: { exclude: ['@r1ck404/nodepod'] },
+  build: {
+    target: 'esnext',
+    outDir: 'dist',
+    rollupOptions: {
+      external: [],
+    },
+  },
+  optimizeDeps: {
+    exclude: ['@r1ck404/nodepod'],
+  },
+  worker: {
+    format: 'es',
+  },
 });
