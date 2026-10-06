@@ -1,4 +1,4 @@
-import { Nodepod, createBrowserHost, setRuntimeHost } from '@r1ck404/nodepod';
+import { Nodepod, ensureRuntimeHost } from '@r1ck404/nodepod';
 
 let instance = null;
 let bootPromise = null;
@@ -8,21 +8,14 @@ export async function bootNodepod() {
   if (bootPromise) return bootPromise;
 
   bootPromise = (async () => {
-    // Registrar el host de navegador ANTES de bootear.
-    // Esto soluciona "No RuntimeHost registered".
-    try {
-      const host = createBrowserHost();
-      setRuntimeHost(host);
-    } catch (e) {
-      console.warn('[nodepod-boot] setRuntimeHost falló (probablemente ya estaba):', e.message);
+    // Registrar el RuntimeHost antes de bootear (evita "No RuntimeHost registered")
+    if (typeof ensureRuntimeHost === 'function') {
+      ensureRuntimeHost();
     }
-
     const np = await Nodepod.boot({
       files: { '/home/project/README.md': '# Proyecto\n' },
       workdir: '/home/project',
       serviceWorker: false,
-      swUrl: './__sw__.js',
-      workerUrl: './__worker__.js',
     });
     instance = np;
     return np;
