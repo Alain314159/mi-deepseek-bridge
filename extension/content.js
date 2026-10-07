@@ -161,11 +161,14 @@ function ensureFab(){
       const r = f.getBoundingClientRect();
       try { chrome.storage.local.set({fabPos:{left:r.left, top:r.top}}); } catch{}
     } else if (Date.now()-downAt < 600){
-      // Fix: subir a 600ms (long-press sin drag antes de 400ms se descartaba)
-      openPanel();
-      panel.classList.toggle('open');
-      if (panel.classList.contains('open') && iframe){
-        iframe.contentWindow.postMessage(makeMsg(MSG.HELLO,{role:'ext'}), PWA_ORIGIN);
+      ensurePanel();
+      if (panel.classList.contains('open')){
+        panel.classList.remove('open');
+      } else {
+        panel.classList.add('open');
+        if (iframe && iframe.contentWindow){
+          try { iframe.contentWindow.postMessage(makeMsg(MSG.HELLO,{role:'ext'}), PWA_ORIGIN); } catch(e){}
+        }
       }
     }
   }
