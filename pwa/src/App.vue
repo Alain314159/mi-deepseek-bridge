@@ -43,7 +43,12 @@ onMounted(async () => {
     term.open(terminalEl.value);
     fitAddon.fit();
     window.addEventListener('resize', () => fitAddon && fitAddon.fit());
+
+    // 1) Bridge PRIMERO: registra listener y arranca boot en background.
+    startBridge();
+
     append('[bridge] arrancando Nodepod…');
+    // 2) Esperar al mismo promise memoizado para pintar el estado.
     await bootNodepod();
     booted.value = true;
     append('[bridge] Nodepod listo. Escribí un comando abajo.');
@@ -51,7 +56,6 @@ onMounted(async () => {
     bootError.value = String(e);
     append('\x1b[31m[bridge] ERROR: ' + e.message + '\x1b[0m');
   }
-  startBridge();
 });
 
 onBeforeUnmount(() => { if (term) term.dispose(); });

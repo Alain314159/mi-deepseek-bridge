@@ -145,14 +145,19 @@ function execInPwa(cmd,onStream){
   return new Promise((res,rej)=>{
     const id=Math.random().toString(36).slice(2,10);
     pending.set(id,{resolve:res,onStream});
-    const go=()=>iframe.contentWindow.postMessage(makeMsg(MSG.EXEC,{cmd,timeout:180000},id),'*');
-    if(!pwaReady){
-      iframe.contentWindow.postMessage(makeMsg(MSG.HELLO,{role:'ext'}),'*');
-      setTimeout(go,1500);
-    } else {
-      go();
-    }
-    setTimeout(()=>{if(pending.has(id)){pending.delete(id);rej(new Error('timeout'));}},200000);
+    const sendExec=()=>{
+      try{iframe.contentWindow.postMessage(makeMsg(MSG.EXEC,{cmd,timeout:180000},id),'*');}
+      catch(e){pending.delete(id);rej(new Error('postMessage EXEC fallo: '+e.message));}
+    };
+    const waitReady=(tries)=>{
+      if(pwaReady){sendExec();return;}
+      if(tries<=0){pending.delete(id);rej(new Error('PWA no respondio READY (timeout 40s)'));return;}
+      try{iframe.contentWindow.postMessage(makeMsg(MSG.HELLO,{role:'ext'}),'*');}
+      catch(e){pending.delete(id);rej(new Error('postMessage HELLO fallo: '+e.message));return;}
+      setTimeout(()=>waitReady(tries-1),800);
+    };
+    waitReady(50);
+    setTimeout(()=>{if(pending.has(id)){pending.delete(id);rej(new Error('timeout global 200s'));}},200000);
   });
 }
 
