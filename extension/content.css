@@ -73,3 +73,13 @@
 .mdsb-run-btn.done { background: #16a34a; }
 .mdsb-run-btn.error { background: #dc2626; }
 .mdsb-run-btn:disabled { opacity: .6; cursor: wait; }
+
+#mdsb-toast { transition: opacity .2s; }
+
+#mdsb-panel .header .status-wait { color: #fbbf24; font-size: 11px; }
+#mdsb-panel .header .status-ok   { color: #6ee7a7; font-size: 11px; }
+#mdsb-panel .header .status-err  { color: #f87171; font-size: 11px; }
+
+.mdsb-run-btn.mdsb-cancel-btn {
+  background: #dc2626; margin-left: 4px; padding: 6px 10px;
+}
